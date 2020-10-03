@@ -10,7 +10,7 @@
 <body>
     <form id="form1" runat="server">
       <div  style="margin-top:10%;">
-        <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label><br />
+        <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label><br /><br />
         <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
     </div>
     </form>
