@@ -13,6 +13,12 @@ namespace OpenXmlDocumentFormatPPT
         {
             OpenDocumentXmlFormatPPT obj = new OpenDocumentXmlFormatPPT();
             var result = obj.WriteOnSlide();
+            if (result)
+                Label1.Text = "Escrituta en titulo y subtitulo de la diapositiva (0) exitosa";
+            else
+                Label1.Text = "Escrituta en titulo y subtitulo de la diapositiva (0) fallida";
+
+            Label2.Text = "NUGET: DOCUMENT FORMAT OPEN XML";
         }
     }
 }

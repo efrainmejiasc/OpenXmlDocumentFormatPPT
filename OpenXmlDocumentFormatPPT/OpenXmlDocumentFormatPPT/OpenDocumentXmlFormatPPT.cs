@@ -37,8 +37,6 @@ namespace OpenXmlDocumentFormatPPT
                     DocumentFormat.OpenXml.Presentation.Shape subTitulo = (DocumentFormat.OpenXml.Presentation.Shape)itemsdiapositiva[3];
                     titulo.InnerXml = GetXmlStringBody(titulo.InnerXml, tituloText);
                     subTitulo.InnerXml = GetXmlStringBody(subTitulo.InnerXml, subTituloText);
-
-
                     partesDocumento.Presentation.Save();
                 }
 
@@ -53,69 +51,45 @@ namespace OpenXmlDocumentFormatPPT
         }
 
 
-
-
-        private string  GetXmlStringBody(string innerXml,string texto)
+        private string  SetTextShape(string innerXml,string texto)
         {
             if (innerXml.Contains("<a:t>"))
-             innerXml = System.Text.RegularExpressions.Regex.Replace(innerXml, @"<a:t(.*?)>(.*?)</a:t>", "<a:t>" + texto + "</a:t>");
+                innerXml = System.Text.RegularExpressions.Regex.Replace(innerXml, @"<a:t(.*?)>(.*?)</a:t>", "<a:t>" + texto + "</a:t>");
+            else
+                innerXml = GetXmlStringBody(innerXml, texto);
 
              return innerXml;
         }
 
 
-        public Paragraph ReplaceText(Paragraph paragraph)
+        private string GetXmlStringBody(string innerXml,string texto)
         {
+            int indice = innerXml.IndexOf("<a:p xmlns:a=");
+            string innerXml_1 = innerXml.Substring(0, indice);
+            innerXml = innerXml_1 + StrMarcadoTextShape();
+            innerXml = SetTextShape(innerXml, texto);
 
-          var parent = paragraph.Parent; //get parent element - to be used when removing placeholder
-            var dataParam = new PowerPointParameter()
-            {
-                Name = "Titulo Set",
-                Text = "Texto para escribir"
-            };
-
-      
-                //insert text list
-                if (dataParam.Name.Contains("string[]")) //check if param is a list
-                {
-                    var arrayText = dataParam.Text.Split(Environment.NewLine.ToCharArray()); //in our case we split it into lines
-
-                    if (arrayText is IEnumerable) //enumerate if we can
-                    {
-                        foreach (var itemData in arrayText)
-                        {
-                            Paragraph bullet = CloneParaGraphWithStyles(paragraph, dataParam.Name, itemData);// create new param - preserve styles
-                            parent.InsertBefore(bullet, paragraph); //insert new element
-                        }
-                    }
-                    paragraph.Remove();//delete placeholder
-                }
-                else
-                {
-                    //insert text line
-                    var param = CloneParaGraphWithStyles(paragraph, dataParam.Name, dataParam.Text); // create new param - preserve styles
-                    parent.InsertBefore(param, paragraph);//insert new element
-
-                    paragraph.Remove();//delete placeholder
-                }
-
-            return paragraph;
+            return innerXml;
         }
 
-        public class PowerPointParameter
+
+        private string StrMarcadoTextShape()
         {
-            public string Name { get; set; }
-            public string Text { get; set; }
-            public FileInfo Image { get; set; }
-        }
+            StringBuilder str = new StringBuilder();
+            str.Append("<a:p xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" >");
+            str.Append("<a:r>");
+            str.Append ("<a:rPr lang=\"en-US\" sz=\"2800\" smtClean=\"0\" >");
+            str.Append("<a:latin typeface=\"Arial\" panose=\"020B0604020202020204\" pitchFamily=\"34\" charset=\"0\" />");
+            str.Append("</a:rPr>");
+            str.Append("<a:t></a:t>");
+            str.Append("</a:r>");
+            str.Append("<a:endParaRPr lang=\"en-US\" sz=\"2800\" >");
+            str.Append("<a:latin typeface=\"Arial\" panose=\"020B0604020202020204\" pitchFamily=\"34\" charset=\"0\" />");
+            str.Append("</a:endParaRPr>");
+            str.Append("</a:p>");
+            str.Append("</p:txBody>");
 
-        public static Paragraph CloneParaGraphWithStyles(Paragraph sourceParagraph, string paramKey, string text)
-        {
-            var xmlSource = sourceParagraph.OuterXml;
-
-            xmlSource = xmlSource.Replace(paramKey.Trim(), text.Trim());
-
-            return new Paragraph(xmlSource);
+            return str.ToString();
         }
 
 
