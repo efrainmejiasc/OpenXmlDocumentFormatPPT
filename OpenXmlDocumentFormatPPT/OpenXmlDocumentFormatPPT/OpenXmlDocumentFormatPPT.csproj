@@ -75,6 +75,8 @@
   <ItemGroup>
     <Content Include="default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Images\zima1.jpeg" />
+    <Content Include="Images\zima2.jpeg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
