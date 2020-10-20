@@ -13,6 +13,12 @@
         <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label><br /><br />
         <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
     </div>
+        <br /> <br /><br />
+  
+         <div>
+                <asp:Button ID="btnEdit" runat="server" Text="Editar" OnClick="btnEdit_Click" />
+               <asp:Button ID="btnDownload" runat="server" Text="Descargar" OnClick="btnDownload_Click" />
+        </div>
     </form>
 </body>
 </html>

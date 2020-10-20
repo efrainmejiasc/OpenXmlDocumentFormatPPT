@@ -20,7 +20,7 @@ namespace OpenXmlDocumentFormatPPT
 
         public bool WriteOnSlide()
         {
-            string filePath = System.Web.HttpContext.Current.Server.MapPath("~/TemplatePPT/Plantilla1.pptx");
+            string filePath = System.Web.HttpContext.Current.Server.MapPath("~/TemplatePPT/Plantilla1.ppsx");
             string imagen1 = System.Web.HttpContext.Current.Server.MapPath("~/Images/zima1.jpeg");
             string imagen2 = System.Web.HttpContext.Current.Server.MapPath("~/Images/zima2.jpeg");
 
@@ -34,7 +34,7 @@ namespace OpenXmlDocumentFormatPPT
                     PresentationPart partesDocumento = documentoPP.PresentationPart;
                     Presentation presentacion = partesDocumento.Presentation;
                     OpenXmlElementList diapositivas = partesDocumento.Presentation.SlideIdList.ChildElements;
-                    string idDiapositiva = (diapositivas[0] as SlideId).RelationshipId;
+                    string idDiapositiva = (diapositivas[1] as SlideId).RelationshipId;//DIAPOSITIVA ACTUAL
                     SlidePart diapositiva = (SlidePart) partesDocumento.GetPartById(idDiapositiva);
                     List<OpenXmlElement> itemsdiapositiva = diapositiva.Slide.CommonSlideData.ShapeTree.ChildElements.ToList();
                  
@@ -43,7 +43,7 @@ namespace OpenXmlDocumentFormatPPT
                    // DocumentFormat.OpenXml.Presentation.Picture imagen = (DocumentFormat.OpenXml.Presentation.Picture)itemsdiapositiva[4];
                     titulo.InnerXml = GetXmlStringBody(titulo.InnerXml, tituloText);
                     subTitulo.InnerXml = GetXmlStringBody(subTitulo.InnerXml, subTituloText);
-                    byte[] nuevaImagen = GetBytesImagen(imagen2);
+                    byte[] nuevaImagen = GetBytesImagen(imagen1);//CAMBIAR IMAGEN
                     ReplacePicture("", nuevaImagen, "image/jpeg", diapositiva);
 
                     partesDocumento.Presentation.Save();

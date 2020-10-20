@@ -11,6 +11,24 @@ namespace OpenXmlDocumentFormatPPT
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Response.Clear();
+        }
+
+     
+
+        protected void btnEdit_Click(object sender, EventArgs e)
+        {
+            ModificarDiapositiva();
+        }
+
+        protected void btnDownload_Click(object sender, EventArgs e)
+        {
+            DownloadFile download = new DownloadFile();
+            var resultado = download.BufferedFileDownload(Response);
+        }
+
+        private void ModificarDiapositiva()
+        {
             OpenDocumentXmlFormatPPT obj = new OpenDocumentXmlFormatPPT();
             var result = obj.WriteOnSlide();
             if (result)
@@ -20,5 +38,7 @@ namespace OpenXmlDocumentFormatPPT
 
             Label2.Text = "NUGET: DOCUMENT FORMAT OPEN XML";
         }
+
+        
     }
 }
