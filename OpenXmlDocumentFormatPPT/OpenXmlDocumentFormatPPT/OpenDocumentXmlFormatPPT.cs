@@ -43,7 +43,7 @@ namespace OpenXmlDocumentFormatPPT
                    // DocumentFormat.OpenXml.Presentation.Picture imagen = (DocumentFormat.OpenXml.Presentation.Picture)itemsdiapositiva[4];
                     titulo.InnerXml = GetXmlStringBody(titulo.InnerXml, tituloText);
                     subTitulo.InnerXml = GetXmlStringBody(subTitulo.InnerXml, subTituloText);
-                    byte[] nuevaImagen = GetBytesImagen(imagen1);//CAMBIAR IMAGEN
+                    byte[] nuevaImagen = GetBytesImagen(imagen2);//CAMBIAR IMAGEN
                     ReplacePicture("", nuevaImagen, "image/jpeg", diapositiva);
 
                     partesDocumento.Presentation.Save();
