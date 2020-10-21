@@ -97,6 +97,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="TemplatePPT\Plantilla1.pptx" />
+    <Content Include="TemplatePPT\Plantilla1.ppsx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

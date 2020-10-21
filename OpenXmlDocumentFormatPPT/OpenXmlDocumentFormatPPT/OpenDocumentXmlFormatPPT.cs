@@ -48,6 +48,7 @@ namespace OpenXmlDocumentFormatPPT
 
                     partesDocumento.Presentation.Save();
                 }
+               
 
                 ReadWriteTxt(filePath);
             }
